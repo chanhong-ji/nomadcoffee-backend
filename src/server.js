@@ -4,6 +4,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-co
 import express from "express";
 import http from "http";
 import schema from "./schema";
+import { getUser } from "./user/user.utils";
 
 const PORT = process.env.PORT;
 
@@ -13,6 +14,13 @@ async function startApolloServer() {
   const server = new ApolloServer({
     schema,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    context: async ({ req }) => {
+      const {
+        headers: { token },
+      } = req;
+      if (!token) return null;
+      return { loggedInUser: await getUser(token) };
+    },
   });
 
   await server.start();
