@@ -9,6 +9,8 @@ export default gql`
     location: String
     avatarURL: String
     githubUsername: String
+    followers(lastId: Int): [User]
+    following(lastId: Int): [User]
     createdAt: String!
     updatedAt: String!
   }
