@@ -17,6 +17,25 @@ const resolvers = {
         ...(lastId && { cursor: { id: lastId } }),
         select: { id: true, username: true, avatarURL: true },
       }),
+
+    totalFollowers: ({ id }) =>
+      client.user.count({ where: { following: { some: { id } } } }),
+
+    totalFollowing: ({ id }) =>
+      client.user.count({ where: { followers: { some: { id } } } }),
+
+    isFollowing: async ({ id }, _, { loggedInUser }) => {
+      if (!loggedInUser) return false;
+      const result = await client.user.count({
+        where: {
+          id: loggedInUser.id,
+          following: { some: { id } },
+        },
+      });
+      return result === 0 ? false : true;
+    },
+
+    isMe: ({ id }, _, { loggedInUser }) => id === loggedInUser?.id,
   },
 };
 
