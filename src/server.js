@@ -5,6 +5,7 @@ import express from "express";
 import http from "http";
 import schema from "./schema";
 import { getUser } from "./user/user.utils";
+import { graphqlUploadExpress } from "graphql-upload";
 
 const PORT = process.env.PORT;
 
@@ -24,6 +25,8 @@ async function startApolloServer() {
   });
 
   await server.start();
+  app.use(graphqlUploadExpress());
+  app.use("/static", express.static("uploads"));
   server.applyMiddleware({ app });
   await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
   console.log(
