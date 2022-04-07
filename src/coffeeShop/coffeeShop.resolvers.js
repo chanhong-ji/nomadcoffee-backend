@@ -5,7 +5,7 @@ const resolvers = {
   CoffeeShop: {
     user: ({ id }) =>
       client.user.findFirst({
-        where: { CoffeeShop: { some: { id } } },
+        where: { shops: { some: { id } } },
         select: {
           id: true,
           username: true,

@@ -3,7 +3,10 @@ import { createWriteStream } from "fs";
 export const categoryProcess = (categories) =>
   categories.map((category) => ({
     where: { name: category.toLowerCase() },
-    create: { name: category.toLowerCase() },
+    create: {
+      name: category.toLowerCase(),
+      slug: category.match(/[\S]+/g).join("-").toLowerCase(),
+    },
   }));
 
 export const photoProcess = async (photo, userId) => {

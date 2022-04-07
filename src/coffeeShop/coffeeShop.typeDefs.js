@@ -9,6 +9,8 @@ export default gql`
     user: User!
     photos: [CoffeeShopPhoto]
     categories: [Category]
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Category {
@@ -17,12 +19,16 @@ export default gql`
     slug: String
     shops: [CoffeeShop]
     totalShops: Int!
+    createdAt: String!
+    updatedAt: String!
   }
 
   type CoffeeShopPhoto {
     id: Int
     url: String!
     shop: CoffeeShop!
+    createdAt: String!
+    updatedAt: String!
   }
 
   scalar Upload

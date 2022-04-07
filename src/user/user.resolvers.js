@@ -18,6 +18,11 @@ const resolvers = {
         select: { id: true, username: true, avatarURL: true },
       }),
 
+    shops: ({ id }) =>
+      client.user
+        .findUnique({ where: { id } })
+        .shops({ select: { id: true, name: true } }),
+
     totalFollowers: ({ id }) =>
       client.user.count({ where: { following: { some: { id } } } }),
 
